@@ -33,8 +33,8 @@ def main(case_name, path):
         #input_fname =  "%s/%s/coupled_run/OUTPUT/SURFACEMODEL/LIS_HIST_200902160000.d01.nc" % (path, casename)
         cable = nc.Dataset(input_fname, 'r')
 
-        landmask  =  cable.variables['Landmask_inst'][:,:].filled(-9999.)
-        landcover =  cable.variables['Landcover_inst'][:,:].filled(-9999.)
+        landmask  =  cable.variables['Landmask_inst'][29,:,:].filled(-9999.)
+        landcover =  cable.variables['Landcover_inst'][29,:,:].filled(-9999.)
         # swnet     =  cable.variables['Swnet_tavg'][:,:].filled(-9999.)
         # lwnet     =  cable.variables['Lwnet_tavg'][:,:].filled(-9999.)
         # rnet      =  cable.variables['Rnet_tavg'][:,:].filled(-9999.)
@@ -90,6 +90,8 @@ def main(case_name, path):
 
         for lat in np.arange(0,149):
             for lon in np.arange(0,169):
+                # print(soiltemp[lat,lon])
+                # print(landmask[lat,lon])
                 if (soiltemp[lat,lon] <= 0.) and (landmask[lat,lon] == 1) :
                     print("lat = "+str(lat)+"; lon = "+str(lon)+"; landcover = "+str(landcover[lat,lon]))
                 if (soilmoist[lat,lon] <= 0.) and (landmask[lat,lon] == 1) :
